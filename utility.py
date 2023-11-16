@@ -119,3 +119,21 @@ def timer_minimax_with_pruning(
 	
 	average_time = sum(execution_times) / len(execution_times)
 	return average_time
+
+
+total_amount = 0
+
+def get_amount_nodes(node: NodeState | NodeStateForPruning):
+	for child in node.children:
+		get_amount_nodes(child)
+	global total_amount
+	total_amount += 1
+	return total_amount
+
+def get_amount_not_visited_nodes(node: NodeStateForPruning):
+	for child in node.children:
+		get_amount_not_visited_nodes(child)
+	if node.alpha == float('-inf') and node.beta == float('inf'):
+		global total_amount
+		total_amount += 1
+	return total_amount
