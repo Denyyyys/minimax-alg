@@ -2,12 +2,12 @@ from typing import List, Callable
 import time
 from minimax import (
 	NodeState,
-	createAllNodeChildren,
+	create_search_tree,
 	minimax_without_pruning
 )
 from minimax_pruning import (
 	NodeStateForPruning,
-	createAllNodeChildrenForPruning,
+	create_search_tree_for_pruning,
 	minimax_with_pruning
 )
 
@@ -59,29 +59,33 @@ def run_minimax_simulation_without_pruning(
 		N: int, 
 		K: int,
 		max_player: bool, 
-		display_info_func: Callable[[str], None]):
+		display_info_func: Callable[[str], None]) -> NodeState:
 	
-	root = createAllNodeChildren(N, K)
+	root = create_search_tree(N, K)
 	minimax_without_pruning(root, max_player)
 	way = []
 	traverse_way(root, way)
 	info = get_gameplay_info(way, max_player)
-	display_info_func(info)
+	if display_info_func:
+		display_info_func(info)
+	return root
 
 
 def run_minimax_simulation_with_pruning(
 		N: int, 
 		K: int,
 		max_player: bool, 
-		display_info_func: Callable[[str], None]):
+		display_info_func: Callable[[str], None] = None) -> NodeStateForPruning:
 	
-	root = createAllNodeChildrenForPruning(N, K)
+	root = create_search_tree_for_pruning(N, K)
 	minimax_with_pruning(root, float('-inf'), float('inf'), max_player)
 	way = []
 	traverse_way(root, way)
 	info = get_gameplay_info(way, max_player)
-	display_info_func(info)
-	
+	if display_info_func:
+		display_info_func(info)
+	return root
+
 
 def timer_minimax_without_pruning(
 		N: int,
@@ -91,7 +95,7 @@ def timer_minimax_without_pruning(
 		):
 	execution_times = []
 	for _ in range(sample_times):
-		root = createAllNodeChildren(N, K)
+		root = create_search_tree(N, K)
 		start_time = time.time()
 		minimax_without_pruning(root, max_player)
 		stop_time = time.time()
@@ -110,7 +114,7 @@ def timer_minimax_with_pruning(
 		):
 	execution_times = []
 	for _ in range(sample_times):
-		root = createAllNodeChildrenForPruning(N, K)
+		root = create_search_tree_for_pruning(N, K)
 		start_time = time.time()
 		minimax_with_pruning(root, float('-inf'), float('inf'), max_player)
 		stop_time = time.time()
@@ -128,12 +132,4 @@ def get_amount_nodes(node: NodeState | NodeStateForPruning):
 		get_amount_nodes(child)
 	global total_amount
 	total_amount += 1
-	return total_amount
-
-def get_amount_not_visited_nodes(node: NodeStateForPruning):
-	for child in node.children:
-		get_amount_not_visited_nodes(child)
-	if node.alpha == float('-inf') and node.beta == float('inf'):
-		global total_amount
-		total_amount += 1
 	return total_amount

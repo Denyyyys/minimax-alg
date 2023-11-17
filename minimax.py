@@ -7,7 +7,7 @@ class NodeState:
         self.cost = cost
 
 
-def createAllNodeChildren(number: int, K: int): 
+def create_search_tree(number: int, K: int): 
     if K <=0: 
         raise ValueError('K cannot be less or equal 0')
     if number == 1:
@@ -16,7 +16,7 @@ def createAllNodeChildren(number: int, K: int):
     node = NodeState(number)
     amount_children = min(K, number - 1)
     for i in range(1, amount_children + 1):
-        child = createAllNodeChildren(number - i, K)
+        child = create_search_tree(number - i, K)
         node.children.append(child)
     return node
 

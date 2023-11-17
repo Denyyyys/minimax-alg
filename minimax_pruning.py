@@ -10,7 +10,7 @@ class NodeStateForPruning:
 
 
 
-def createAllNodeChildrenForPruning(number: int, K: int): #stwórz przestrzeń przeszukiwań
+def create_search_tree_for_pruning(number: int, K: int): #stwórz przestrzeń przeszukiwań
     if K <=0: 
         raise ValueError('K cannot be less or equal 0')
     if number == 1:
@@ -19,7 +19,7 @@ def createAllNodeChildrenForPruning(number: int, K: int): #stwórz przestrzeń p
     node = NodeStateForPruning(number)
     amount_children = min(K, number - 1)
     for i in range(1, amount_children + 1):
-        child = createAllNodeChildrenForPruning(number - i, K)
+        child = create_search_tree_for_pruning(number - i, K)
         node.children.append(child)
     return node
 
