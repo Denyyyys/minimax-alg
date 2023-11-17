@@ -40,25 +40,26 @@ print(f"N = {N}, K = {K}")
 #################################################################
 
 ###### 			measure average time 			################
-K = 3
-max_player = True
-data = [["N", "K", "number_nodes", "avg_time_no_pruning","avg_time_with_pruning"]]
-for N in range(8, 20):
-	# root = create_search_tree_for_pruning(N, K)
-	root = run_minimax_simulation_with_pruning(N, K, max_player)
-	average_time_no_pruning = timer_minimax_without_pruning(N, K, max_player, 40)
-	average_time_with_pruning = timer_minimax_with_pruning(N, K, max_player, 40)
-	number_nodes = get_amount_nodes(root)
-	data.append([N, K, number_nodes,average_time_no_pruning, average_time_with_pruning])
-
-with open('average_time.csv', mode="w", newline='') as file:
-    writer = csv.writer(file)
-    writer.writerows(data)
-###################################################################
-# N = 5
 # K = 3
-# root = run_minimax_simulation_with_pruning(N,K, max_player)
+# max_player = True
+# data = [["N", "K", "number_nodes", "avg_time_no_pruning","avg_time_with_pruning"]]
+# for N in range(8, 20):
+# 	# root = create_search_tree_for_pruning(N, K)
+# 	root = run_minimax_simulation_with_pruning(N, K, max_player)
+# 	average_time_no_pruning = timer_minimax_without_pruning(N, K, max_player, 40)
+# 	average_time_with_pruning = timer_minimax_with_pruning(N, K, max_player, 40)
+# 	number_nodes = get_amount_nodes(root)
+# 	data.append([N, K, number_nodes,average_time_no_pruning, average_time_with_pruning])
+
+# with open('average_time.csv', mode="w", newline='') as file:
+#     writer = csv.writer(file)
+#     writer.writerows(data)
+###################################################################
+N = 5
+K = 3
+root = run_minimax_simulation_with_pruning(N,K, max_player, print_to_console)
 
 
-# number = get_amount_not_visited_nodes(root)
+# number = get_amount_nodes(root)
 # print(number)
+################
